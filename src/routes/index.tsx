@@ -55,7 +55,7 @@ function Index() {
 
       <section id="home" className="hero" style={{ backgroundImage: `url(${images.hero})`, backgroundSize: "contain", backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundColor: "#17130f", minHeight: "78vh" }}>
         <div className="hero-overlay" />
-        <div className="hero-content"><p className="eyebrow">Horizontina · Rio Grande do Sul</p><div className="hero-logo"><span className="logo-seal">GB</span><h1>GALPÃO <em>BIRIVA</em></h1><div className="ornament"><span />✦<span /></div><p>Celebrações autênticas em meio à natureza</p></div><button className="gold-button" onClick={() => scrollTo("contato")}>Reservar meu evento <span>↗</span></button></div>
+        <div className="hero-content"><div className="hero-logo"><span className="logo-seal">GB</span><h1>GALPÃO <em>BIRIVA</em></h1><div className="ornament"><span />✦<span /></div><p>Celebrações autênticas em meio à natureza</p></div><button className="gold-button" onClick={() => scrollTo("contato")}>Reservar meu evento <span>↗</span></button><p className="eyebrow hero-location">Horizontina · Rio Grande do Sul</p></div>
         <div className="hero-scroll">role para descobrir <span>↓</span></div>
       </section>
 
