@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 export const Route = createFileRoute("/")({ component: Index });
 
@@ -43,10 +43,96 @@ const mapQuery = "Galpão Biriva, Horizontina - RS";
 const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`;
 const embedMap = `https://www.google.com/maps?q=${encodeURIComponent(mapQuery)}&output=embed`;
 
+// Wave Dividers
+const WaveLightToDark = () => (
+  <div className="section-wave" style={{ background: 'var(--paper)' }}>
+    <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+      <path d="M0,0 C480,120 960,120 1440,0 L1440,120 L0,120 Z" fill="var(--deep)" />
+    </svg>
+  </div>
+);
+
+const WaveDarkToLight = () => (
+  <div className="section-wave" style={{ background: 'var(--deep)' }}>
+    <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+      <path d="M0,120 C480,0 960,0 1440,120 L1440,0 L0,0 Z" fill="var(--paper)" />
+    </svg>
+  </div>
+);
+
+const WaveBrownToLight = () => (
+  <div className="section-wave" style={{ background: 'var(--brown)' }}>
+    <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+      <path d="M0,120 C480,0 960,0 1440,120 L1440,0 L0,0 Z" fill="var(--paper)" />
+    </svg>
+  </div>
+);
+
+// Animated Counter Component
+const AnimatedCounter = ({ target, duration = 2000, suffix = "" }: { target: number, duration?: number, suffix?: string }) => {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  const hasAnimated = useRef(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      const [entry] = entries;
+      if (entry.isIntersecting && !hasAnimated.current) {
+        hasAnimated.current = true;
+        let startTimestamp: number | null = null;
+        
+        const step = (timestamp: number) => {
+          if (!startTimestamp) startTimestamp = timestamp;
+          const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+          const easeProgress = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+          setCount(Math.floor(easeProgress * target));
+          
+          if (progress < 1) {
+            window.requestAnimationFrame(step);
+          } else {
+            setCount(target);
+          }
+        };
+        
+        window.requestAnimationFrame(step);
+      }
+    }, { threshold: 0.5 });
+    
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+    return () => observer.disconnect();
+  }, [target, duration]);
+
+  return <span ref={ref} className="counter-value">{count}{suffix}</span>;
+};
+
+// Animated Text component (Letter by Letter)
+const AnimatedText = ({ text }: { text: string }) => {
+  return (
+    <>
+      {text.split("").map((char, index) => (
+        <span 
+          key={index} 
+          className="hero-char" 
+          style={{ animationDelay: `${0.4 + index * 0.05}s` }}
+        >
+          {char === " " ? "\u00A0" : char}
+        </span>
+      ))}
+    </>
+  );
+};
+
 function Index() {
   const [isLightSection, setIsLightSection] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [selectedImage, setSelectedImage] = useState<[string, string] | null>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
+  // Parallax refs
+  const heroRef = useRef<HTMLElement>(null);
+  const featuresImageRef = useRef<HTMLImageElement>(null);
 
   const scrollTo = (id: string) => {
     setIsMenuOpen(false);
@@ -61,19 +147,33 @@ function Index() {
     ["localizacao", "Como chegar"]
   ];
 
+  // Scroll logic for header glass effect and light/dark detection
   useEffect(() => {
-    const lightSections = Array.from(document.querySelectorAll(".section-light"));
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const lightSections = Array.from(document.querySelectorAll(".section-light, .section-paper"));
     const header = document.querySelector(".site-header");
     if (!header) return;
 
     const observer = new IntersectionObserver((entries) => {
-      setIsLightSection(entries.some((entry) => entry.isIntersecting && entry.intersectionRatio > 0.2));
-    }, { rootMargin: `-${header.clientHeight}px 0px -45% 0px`, threshold: [0.2] });
+      // Find if any light section is significantly intersecting
+      const intersectingLight = entries.some((entry) => entry.isIntersecting && entry.intersectionRatio > 0.1);
+      setIsLightSection(intersectingLight);
+    }, { rootMargin: `-${header.clientHeight}px 0px -60% 0px`, threshold: [0, 0.1, 0.5] });
 
     lightSections.forEach((section) => observer.observe(section));
     return () => observer.disconnect();
   }, []);
 
+  // Intersection Observer for Reveal animations
   useEffect(() => {
     const revealElements = document.querySelectorAll(".reveal");
     const observer = new IntersectionObserver((entries) => {
@@ -82,10 +182,40 @@ function Index() {
           entry.target.classList.add("active");
         }
       });
-    }, { threshold: 0.15 });
+    }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
 
     revealElements.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
+  }, []);
+
+  // Parallax Effect
+  useEffect(() => {
+    // Respect prefers-reduced-motion
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion || window.innerWidth < 900) return;
+
+    const handleParallax = () => {
+      const scrollY = window.scrollY;
+      
+      // Hero parallax
+      if (heroRef.current && scrollY < window.innerHeight) {
+        // Move background image slightly down as we scroll down
+        heroRef.current.style.backgroundPositionY = `${scrollY * 0.4}px`;
+      }
+      
+      // Features image parallax
+      if (featuresImageRef.current) {
+        const rect = featuresImageRef.current.getBoundingClientRect();
+        // Check if in viewport
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          const yPos = (rect.top - window.innerHeight / 2) * 0.15;
+          featuresImageRef.current.style.transform = `translateY(${yPos}px) scale(1.05)`;
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleParallax, { passive: true });
+    return () => window.removeEventListener('scroll', handleParallax);
   }, []);
 
   useEffect(() => {
@@ -99,7 +229,7 @@ function Index() {
 
   return (
     <main className="biriva-site">
-      <header className={`site-header ${isLightSection ? "site-header-light" : ""}`}>
+      <header className={`site-header ${isScrolled ? "scrolled" : ""} ${isLightSection && !isScrolled ? "site-header-light" : ""}`}>
         <button className="brand" onClick={() => scrollTo("home")} aria-label="Voltar ao início">
           <span className="brand-mark">GB</span>
           <span><strong>GALPÃO</strong><small>BIRIVA</small></span>
@@ -120,13 +250,13 @@ function Index() {
         </div>
       )}
 
-      <section id="home" className="hero" style={{ backgroundImage: `url(${images.hero})` }}>
+      <section id="home" className="hero parallax-layer" ref={heroRef} style={{ backgroundImage: `url(${images.hero})`, backgroundPosition: 'center 0px' }}>
         <div className="hero-overlay" />
         <div className="hero-content">
           <p className="eyebrow hero-location">Horizontina · Rio Grande do Sul</p>
           <div className="hero-logo">
             <span className="logo-seal">GB</span>
-            <h1>GALPÃO <em>BIRIVA</em></h1>
+            <h1><AnimatedText text="GALPÃO " /><em><AnimatedText text="BIRIVA" /></em></h1>
             <div className="ornament"><span />✦<span /></div>
             <p>Celebrações autênticas em meio à natureza</p>
           </div>
@@ -151,6 +281,8 @@ function Index() {
           </div>
         </div>
       </section>
+
+      <WaveLightToDark />
 
       <section id="servicos" className="services section-dark">
         <div className="section-heading center reveal">
@@ -189,6 +321,8 @@ function Index() {
         </div>
       </section>
 
+      <WaveDarkToLight />
+
       <section id="galeria" className="gallery section-light">
         <div className="section-heading reveal">
           <div className="section-kicker">Galeria de experiências</div>
@@ -206,7 +340,7 @@ function Index() {
 
       <section className="features section-brown">
         <div className="feature-image reveal">
-          <img src={images.pool} alt="Área externa do Galpão Biriva" />
+          <img ref={featuresImageRef} src={images.pool} alt="Área externa do Galpão Biriva" className="parallax-layer" style={{ transform: "scale(1.05)" }} />
         </div>
         <div className="feature-copy reveal delay-1">
           <div className="section-kicker">Detalhes que fazem diferença</div>
@@ -219,6 +353,24 @@ function Index() {
           </div>
         </div>
       </section>
+      
+      {/* Animated Stats Section */}
+      <section className="stats-bar">
+        <div className="stat-item reveal delay-1">
+          <AnimatedCounter target={15} suffix="+" />
+          <span className="stat-label">Anos de Tradição</span>
+        </div>
+        <div className="stat-item reveal delay-2">
+          <AnimatedCounter target={500} suffix="+" />
+          <span className="stat-label">Eventos Realizados</span>
+        </div>
+        <div className="stat-item reveal delay-3">
+          <AnimatedCounter target={100} suffix="%" />
+          <span className="stat-label">Autenticidade Gaúcha</span>
+        </div>
+      </section>
+
+      <WaveBrownToLight />
 
       <section className="quotes section-light">
         <div className="section-kicker center reveal">Quem já viveu</div>
@@ -254,7 +406,7 @@ function Index() {
             <h3>Galpão Biriva</h3>
             <p>Rua Mauro Alberto Hoffmann, 355<br />Bairro Kennedy · Horizontina/RS</p>
             <a className="gold-button" href={mapUrl} target="_blank" rel="noreferrer">Abrir no Google Maps ↗</a>
-            <a className="text-link" href={wa} target="_blank" rel="noreferrer">Precisa de ajuda? Fale conosco →</a>
+            <a className="text-link" href={wa} target="_blank" rel="noreferrer">Precisa de ajuda? Fale conosco <span>→</span></a>
           </div>
         </div>
       </section>
@@ -266,7 +418,7 @@ function Index() {
             <h2>Planeje sua<br /><i>experiência</i></h2>
             <p>Conte para nós o que você está imaginando. A gente ajuda a transformar a ideia em um encontro com a cara do Galpão Biriva.</p>
             <div className="contact-actions">
-              <a className="gold-button" href={wa} target="_blank" rel="noreferrer">Falar pelo WhatsApp ↗</a>
+              <a className="gold-button" href={wa} target="_blank" rel="noreferrer">Falar pelo WhatsApp <span>↗</span></a>
               <button className="outline-button" onClick={() => scrollTo("localizacao")}>Como chegar</button>
             </div>
           </div>

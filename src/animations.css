@@ -1,18 +1,206 @@
+/* ═══════════════════════════════════════════════════════
+   GALPÃO BIRIVA — Animation System
+   All animations use transform/opacity for GPU performance.
+   ═══════════════════════════════════════════════════════ */
+
+/* ── Scroll Reveal ────────────────────────────────────── */
 .reveal {
   opacity: 0;
-  transform: translateY(35px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(30px);
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 .reveal.active {
   opacity: 1;
   transform: translateY(0);
 }
-.delay-1 { transition-delay: 0.15s; }
-.delay-2 { transition-delay: 0.3s; }
-.delay-3 { transition-delay: 0.45s; }
+.delay-1 { transition-delay: 0.12s; }
+.delay-2 { transition-delay: 0.24s; }
+.delay-3 { transition-delay: 0.36s; }
+.delay-4 { transition-delay: 0.48s; }
 
+/* ── Hero entrance keyframes ──────────────────────────── */
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Hero title: letter-by-letter reveal ──────────────── */
+.hero-char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(18px);
+  animation: charReveal 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes charReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Scroll-down bouncing arrow ───────────────────────── */
+@keyframes bounceArrow {
+  0%, 100% { transform: translateY(0); opacity: 0.9; }
+  50%      { transform: translateY(-8px); opacity: 1; }
+}
+.hero-scroll span {
+  display: block;
+  text-align: center;
+  margin-top: 8px;
+  color: #d8b77b;
+  animation: bounceArrow 2s ease-in-out infinite;
+}
+
+/* ── Parallax layer (applied via JS transform) ────────── */
+.parallax-layer {
+  will-change: transform;
+  transition: none; /* JS drives the transform directly */
+}
+
+/* ── Counter animation ────────────────────────────────── */
+.counter-value {
+  display: inline-block;
+  font-variant-numeric: tabular-nums;
+  will-change: contents;
+}
+
+/* ── Gallery figure hover (elegant slide-up caption) ──── */
+.gallery-grid figcaption {
+  transform: translateY(8px);
+  opacity: 0;
+  transition:
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.35s ease;
+}
+.gallery-grid figure:hover figcaption {
+  transform: translateY(0);
+  opacity: 1;
+}
+.gallery-grid figure::after {
+  transition: opacity 0.4s ease !important;
+}
+.gallery-grid figure:hover::after {
+  opacity: 1 !important;
+}
+
+/* ── Text-link animated underline ─────────────────────── */
+.text-link {
+  position: relative;
+  overflow: hidden;
+}
+.text-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--gold, #b58a4a);
+  transform: translateX(-101%);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.text-link:hover::after {
+  transform: translateX(0);
+}
+
+/* ── Section wave divider ─────────────────────────────── */
+.section-wave {
+  display: block;
+  width: 100%;
+  line-height: 0;
+  overflow: hidden;
+}
+.section-wave svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ── Subtle texture overlay for dark sections ─────────── */
+.section-dark::before,
+.section-brown::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  pointer-events: none;
+  z-index: 0;
+}
+.section-dark,
+.section-brown,
+.services {
+  position: relative;
+}
+.section-dark > *,
+.section-brown > *,
+.services > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Glass header effect on scroll ────────────────────── */
+.site-header.scrolled {
+  background: rgba(23, 17, 13, 0.82) !important;
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* ── Feature list item hover ──────────────────────────── */
+.feature-list > div {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+}
+.feature-list > div:hover {
+  transform: translateX(8px);
+}
+
+/* ── Quote card hover ─────────────────────────────────── */
+.quote-grid blockquote {
+  transition:
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.4s ease;
+}
+.quote-grid blockquote:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 45px rgba(54, 39, 28, 0.14);
+}
+
+/* ═══════════════════════════════════════════════════════
+   ACCESSIBILITY: Respect user's motion preference
+   ═══════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .hero-char {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+  .parallax-layer {
+    transform: none !important;
+  }
+  .gallery-grid figcaption {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }

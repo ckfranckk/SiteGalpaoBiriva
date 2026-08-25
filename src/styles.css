@@ -5,40 +5,7 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Microinterações e sombras de profundidade */
-.service-card {
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease !important;
-}
-.service-card:hover {
-  transform: translateY(-8px) !important;
-  box-shadow: 0 22px 45px rgba(0, 0, 0, 0.35) !important;
-  border-color: rgba(196, 161, 102, 0.4) !important;
-}
-.service-card img {
-  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) !important;
-}
-.service-card:hover img {
-  transform: scale(1.06) !important;
-}
-
-.gallery-grid figure {
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease !important;
-}
-.gallery-grid figure:hover {
-  transform: translateY(-4px) !important;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18) !important;
-}
-.gallery-grid figure img {
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) !important;
-}
-.gallery-grid figure:hover img {
-  transform: scale(1.06) !important;
-}
-
-.gold-button {
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
-}
-.gold-button:hover {
-  transform: translateY(-3px) scale(1.02) !important;
-  box-shadow: 0 8px 25px rgba(173, 96, 63, 0.4) !important;
-}
+/* Microinterações e sombras de profundidade (maioria movida para base/animations) */
+/* Removendo regras duplicadas e deixando apenas o que for específico de folha secundária,
+   mas como movi as regras principais de hover de cards para o styles-base.css 
+   para melhor organização com os tokens, este arquivo serve apenas como agregador. */
