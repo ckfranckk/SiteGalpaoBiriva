@@ -13,7 +13,6 @@ const images = {
 };
 
 const galleryItems = [
-  ["/images/483584955_1197092509083005_1796143863515048303_n.jpg", "Espaço ao ar livre"],
   ["/images/505229815_3061616200680811_709904558938245634_n.jpg", "Eventos e apresentações"],
   ["/images/505231436_3061615934014171_595236435169980913_n.jpg", "Identidade gaúcha"],
   ["/images/505316243_3061615907347507_5109892525483256687_n.jpg", "Memórias do Galpão"],
