@@ -19,3 +19,23 @@
 #lovable-badge {
 display: none !important;
 }
+
+/* Navegação dinâmica e refinamento da seção Nossa essência */
+.site-header-light { background:rgba(32,23,16,.90); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); box-shadow:0 8px 30px rgba(20,14,10,.18); }
+.site-header-light .brand, .site-header-light .brand-mark, .site-header-light .site-header nav button { color:#f5ede0; }
+.site-header-light .brand-mark { border-color:rgba(216,183,123,.85); color:#d8b77b; }
+.site-header-light .brand strong { color:#fff; }
+.site-header-light .brand small { color:#d8b77b; }
+.site-header-light .site-header nav button { color:#f5ede0; }
+.site-header-light .site-header nav button:hover { color:#d8b77b; }
+.site-header-light .header-cta { color:#fff; border-color:rgba(216,183,123,.75); }
+.intro { scroll-margin-top:78px; }
+.intro-grid { align-items:center; }
+.intro-copy { align-self:center; }
+.intro-kicker { font-family:'Cormorant Garamond',serif; font-size:12px; font-weight:600; letter-spacing:.34em; text-transform:uppercase; color:#8d6338; }
+.intro-copy h2 { margin-bottom:42px; }
+.intro-copy .lead { margin-bottom:30px; }
+.intro-copy p:not(.lead) { line-height:1.9; }
+.intro-link { margin-top:24px; transition:transform .2s ease,color .2s ease,letter-spacing .2s ease; }
+.intro-link:hover { transform:translateX(5px); color:var(--gold); letter-spacing:1.9px; }
+@media(max-width:560px){ .site-header-light { background:rgba(32,23,16,.94); } .intro-copy h2 { margin-bottom:32px; } }
