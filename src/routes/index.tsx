@@ -39,8 +39,9 @@ const galleryItems = [
 ];
 
 const wa = "https://wa.me/5555991578125?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20o%20Galp%C3%A3o%20Biriva.";
-const mapUrl = "https://www.google.com/maps/search/?api=1&query=Galp%C3%A3o%20Biriva%2C%20Rua%20Mauro%20Alberto%20Hoffmann%2C%20355%2C%20Horizontina%20RS";
-const embedMap = "https://www.google.com/maps?q=Rua%20Mauro%20Alberto%20Hoffmann%2C%20355%2C%20Horizontina%20RS&output=embed";
+const mapQuery = "Galpão Biriva, Horizontina - RS";
+const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`;
+const embedMap = `https://www.google.com/maps?q=${encodeURIComponent(mapQuery)}&output=embed`;
 
 function Index() {
   const [isLightSection, setIsLightSection] = useState(false);
