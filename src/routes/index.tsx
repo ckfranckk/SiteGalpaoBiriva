@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 
 export const Route = createFileRoute("/")({ component: Index });
 
@@ -42,12 +43,28 @@ const mapUrl = "https://www.google.com/maps/search/?api=1&query=Galp%C3%A3o%20Bi
 const embedMap = "https://www.google.com/maps?q=Rua%20Mauro%20Alberto%20Hoffmann%2C%20355%2C%20Horizontina%20RS&output=embed";
 
 function Index() {
+  const [isLightSection, setIsLightSection] = useState(false);
   const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
   const nav = [["home", "Home"], ["sobre", "Sobre nós"], ["servicos", "Serviços"], ["galeria", "Galeria"], ["localizacao", "Como chegar"]];
 
+  useEffect(() => {
+    const lightSections = Array.from(document.querySelectorAll(".section-light"));
+    const header = document.querySelector(".site-header");
+    if (!header) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleLight = entries.some((entry) => entry.isIntersecting && entry.intersectionRatio > 0.2);
+        setIsLightSection(visibleLight);
+      },
+      { rootMargin: `-${header.clientHeight}px 0px -45% 0px`, threshold: [0.2] }
+    );
+    lightSections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <main className="biriva-site">
-      <header className="site-header">
+      <header className={`site-header ${isLightSection ? "site-header-light" : ""}`}>
         <button className="brand" onClick={() => scrollTo("home")} aria-label="Voltar ao início"><span className="brand-mark">GB</span><span><strong>GALPÃO</strong><small>BIRIVA</small></span></button>
         <nav>{nav.map(([id, label]) => <button key={id} onClick={() => scrollTo(id)}>{label}</button>)}</nav>
         <a className="header-cta" href={wa} target="_blank" rel="noreferrer">Reservar evento</a>
@@ -63,7 +80,7 @@ function Index() {
         <div className="hero-scroll">role para descobrir <span>↓</span></div>
       </section>
 
-      <section id="sobre" className="intro section-light"><div className="section-kicker">Nossa essência</div><div className="intro-grid"><div className="intro-copy"><h2>A essência do<br /><i>Rio Grande do Sul</i></h2><p className="lead">Um lugar onde tradição, música e hospitalidade se encontram.</p><p>Em Horizontina, o Galpão Biriva nasceu como uma homenagem à memória e ao legado da cultura gaúcha. O espaço reúne arquitetura rústica, encontros, sabores e momentos que carregam a alma do nosso pago.</p><p>Mais do que um local para celebrar, é um cenário para viver experiências autênticas, com o calor da madeira, a natureza ao redor e aquele jeito simples e especial de receber bem.</p><button className="text-link" onClick={() => scrollTo("galeria")}>Conheça o espaço <span>→</span></button></div><div className="intro-visual"><img src={images.intro} alt="Galpão Biriva cercado pela natureza" /><div className="image-caption"><span>01</span><strong>Um refúgio em meio à natureza</strong></div></div></div></section>
+      <section id="sobre" className="intro section-light"><div className="section-kicker intro-kicker">Nossa essência</div><div className="intro-grid"><div className="intro-copy"><h2>A essência do<br /><i>Rio Grande do Sul</i></h2><p className="lead">Um lugar onde tradição, música e hospitalidade se encontram.</p><p>Em Horizontina, o Galpão Biriva nasceu como uma homenagem à memória e ao legado da cultura gaúcha. O espaço reúne arquitetura rústica, encontros, sabores e momentos que carregam a alma do nosso pago.</p><p>Mais do que um local para celebrar, é um cenário para viver experiências autênticas, com o calor da madeira, a natureza ao redor e aquele jeito simples e especial de receber bem.</p><button className="text-link intro-link" onClick={() => scrollTo("galeria")}>Conheça o espaço <span>→</span></button></div><div className="intro-visual"><img src={images.intro} alt="Galpão Biriva cercado pela natureza" /><div className="image-caption"><span>01</span><strong>Um refúgio em meio à natureza</strong></div></div></div></section>
 
       <section id="servicos" className="services section-dark"><div className="section-heading center"><div className="section-kicker">O que fazemos</div><h2>Um galpão para <i>viver</i></h2><p>Da primeira conversa ao último acorde, criamos o cenário para a sua celebração.</p></div><div className="service-grid">
         <article className="service-card"><img src={images.interior} alt="Espaço do Galpão Biriva" /><div className="service-body"><span>01 · Eventos</span><h3>Aluguel de Galpão</h3><p>Um ambiente versátil para casamentos, aniversários, encontros familiares e eventos corporativos.</p><a href={wa} target="_blank" rel="noreferrer">Orçamento personalizado ↗</a></div></article>
