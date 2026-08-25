@@ -75,7 +75,32 @@ function Index() {
 
       <section className="quotes section-light"><div className="section-kicker center">Quem já viveu</div><h2 className="center">Histórias que ficam</h2><div className="quote-grid">{["Um lugar lindo, acolhedor e cheio de personalidade. A estrutura e o clima fizeram nossa celebração ser ainda mais especial.", "A experiência foi daquelas que a gente leva para a vida. Comida boa, ambiente incrível e aquele jeito gaúcho de receber.", "O Galpão tem uma energia única. Cada detalhe conversa com a história e deixa qualquer encontro muito mais marcante."].map((text, i) => <blockquote key={text}><div className="stars">★★★★★</div><p>“{text}”</p><footer>— Experiência no Galpão Biriva · {i + 1}</footer></blockquote>)}</div></section>
 
-      <section id="localizacao" className="location section-light"><div className="section-heading"><div className="section-kicker">Visite o Galpão</div><h2>Como <i>chegar</i></h2><p>Encontre o Galpão Biriva no mapa e trace sua rota até o espaço.</p></div><div className="location-grid"><div className="map-frame"><iframe title="Mapa do Galpão Biriva" src={embedMap} loading="lazy" referrerPolicy="no-referrer-when-downgrade" /></div><div className="location-copy"><span className="location-pin">⌖</span><div className="section-kicker">Nossa localização</div><h3>Galpão Biriva</h3><p>Rua Mauro Alberto Hoffmann, 355<br />Bairro Kennedy · Horizontina/RS</p><a className="gold-button" href={mapUrl} target="_blank" rel="noreferrer">Abrir no Google Maps ↗</a><a className="text-link" href={wa} target="_blank" rel="noreferrer">Precisa de ajuda? Fale conosco →</a></div></div></section>
+      <section id="localizacao" className="location section-light" style={{ padding: "clamp(64px, 8vw, 112px) clamp(20px, 6vw, 88px)" }}>
+        <div className="location-heading" style={{ maxWidth: 760, margin: "0 auto 48px", textAlign: "center" }}>
+          <div className="section-kicker">Visite o Galpão</div>
+          <h2 style={{ margin: "10px 0 14px" }}>Como <i>chegar</i></h2>
+          <p style={{ margin: 0, lineHeight: 1.7 }}>Encontre o Galpão Biriva no mapa e trace sua rota até o espaço.</p>
+        </div>
+        <div className="location-grid" style={{ display: "grid", gridTemplateColumns: "minmax(0, 1.25fr) minmax(320px, 0.75fr)", gap: "clamp(32px, 5vw, 72px)", maxWidth: 1180, margin: "0 auto", alignItems: "stretch" }}>
+          <div className="map-frame" style={{ minHeight: 440, height: "100%", overflow: "hidden", borderRadius: 18, boxShadow: "0 18px 45px rgba(38, 28, 18, 0.14)", border: "1px solid rgba(89, 67, 45, 0.14)" }}>
+            <iframe title="Mapa do Galpão Biriva" src={embedMap} loading="lazy" referrerPolicy="no-referrer-when-downgrade" style={{ width: "100%", height: "100%", minHeight: 440, border: 0, display: "block" }} />
+          </div>
+          <div className="location-copy" style={{ display: "flex", flexDirection: "column", justifyContent: "center", padding: "clamp(12px, 2vw, 28px) 0" }}>
+            <span className="location-pin" aria-hidden="true" style={{ fontSize: 30, lineHeight: 1, marginBottom: 22 }}>⌖</span>
+            <div className="section-kicker">Nossa localização</div>
+            <h3 style={{ margin: "10px 0 18px", fontSize: "clamp(28px, 3vw, 38px)" }}>Galpão Biriva</h3>
+            <div style={{ display: "flex", gap: 12, alignItems: "flex-start", marginBottom: 30 }}>
+              <span aria-hidden="true" style={{ fontSize: 20, lineHeight: 1.5 }}>⌖</span>
+              <p style={{ margin: 0, lineHeight: 1.75 }}>Rua Mauro Alberto Hoffmann, 355<br />Bairro Kennedy, Horizontina/RS</p>
+            </div>
+            <div className="location-actions" style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 16 }}>
+              <a className="gold-button" href={mapUrl} target="_blank" rel="noreferrer" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 10, minHeight: 52, padding: "0 24px", textDecoration: "none" }}>Abrir no Google Maps <span>↗</span></a>
+              <a className="text-link" href={wa} target="_blank" rel="noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 8, margin: 0 }}>Precisa de ajuda? Fale conosco <span>→</span></a>
+            </div>
+          </div>
+        </div>
+        <style>{`@media (max-width: 820px) { #localizacao .location-grid { grid-template-columns: 1fr !important; } #localizacao .map-frame, #localizacao .map-frame iframe { min-height: 340px !important; } #localizacao .location-copy { padding: 8px 0 0 !important; } }`}</style>
+      </section>
 
       <section id="contato" className="contact section-dark"><div className="contact-copy"><div className="section-kicker">Vamos conversar</div><h2>Planeje sua<br /><i>experiência</i></h2><p>Conte para nós o que você está imaginando. A gente ajuda a transformar a ideia em um encontro com a cara do Galpão Biriva.</p><div className="contact-actions"><a className="gold-button" href={wa} target="_blank" rel="noreferrer">Falar pelo WhatsApp ↗</a><button className="outline-button" onClick={() => scrollTo("localizacao")}>Como chegar</button></div><div className="contact-meta"><div><span>Endereço</span><strong>Rua Mauro Alberto Hoffmann, 355<br />Bairro Kennedy · Horizontina/RS</strong></div><div><span>Telefone</span><strong>(55) 99157-8125</strong></div></div></div></section>
 
