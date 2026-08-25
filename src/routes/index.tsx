@@ -44,6 +44,7 @@ const embedMap = "https://www.google.com/maps?q=Rua%20Mauro%20Alberto%20Hoffmann
 
 function Index() {
   const [isLightSection, setIsLightSection] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<[string, string] | null>(null);
   const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
   const nav = [["home", "Home"], ["sobre", "Sobre nós"], ["servicos", "Serviços"], ["galeria", "Galeria"], ["localizacao", "Como chegar"]];
 
@@ -58,17 +59,33 @@ function Index() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    if (selectedImage) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [selectedImage]);
+
   return (
     <main className="biriva-site">
       <style>{`
         .gallery-grid{display:grid!important;grid-template-columns:repeat(12,minmax(0,1fr))!important;grid-auto-rows:108px!important;grid-auto-flow:dense!important;gap:14px!important;align-items:stretch!important}
-        .gallery-grid figure,.gallery-grid figure:nth-child(n){grid-column:span 3!important;grid-row:span 2!important;height:auto!important;min-height:0!important}
+        .gallery-grid figure,.gallery-grid figure:nth-child(n){grid-column:span 3!important;grid-row:span 2!important;height:auto!important;min-height:0!important;cursor:pointer!important}
         .gallery-grid figure:nth-child(1),.gallery-grid figure:nth-child(4),.gallery-grid figure:nth-child(21){grid-column:span 6!important;grid-row:span 4!important}
         .gallery-grid figure:nth-child(n) img{width:100%!important;height:100%!important;object-fit:cover!important}
         .gallery-grid figure:nth-child(4) img{object-position:top center!important}
         .gallery-grid figure:hover img{transform:scale(1.035)!important}
-        @media(max-width:900px){.gallery-grid{grid-template-columns:repeat(6,minmax(0,1fr))!important;grid-auto-rows:92px!important;gap:12px!important}.gallery-grid figure,.gallery-grid figure:nth-child(n){grid-column:span 3!important;grid-row:span 2!important}.gallery-grid figure:nth-child(1),.gallery-grid figure:nth-child(4),.gallery-grid figure:nth-child(21){grid-column:span 6!important;grid-row:span 3!important}}
-        @media(max-width:560px){.gallery-grid{grid-template-columns:1fr!important;grid-auto-rows:220px!important;gap:12px!important}.gallery-grid figure,.gallery-grid figure:nth-child(n){grid-column:1!important;grid-row:span 1!important}.gallery-grid figure:nth-child(1),.gallery-grid figure:nth-child(4),.gallery-grid figure:nth-child(21){grid-column:1!important;grid-row:span 2!important}}
+        @media(max-width:900px){.gallery-grid{grid-template-columns:repeat(2,1fr)!important;grid-auto-rows:150px!important;gap:12px!important}.gallery-grid figure,.gallery-grid figure:nth-child(n){grid-column:span 1!important;grid-row:span 1!important}.gallery-grid figure:nth-child(1),.gallery-grid figure:nth-child(4),.gallery-grid figure:nth-child(21){grid-column:span 2!important;grid-row:span 2!important}}
+        @media(max-width:560px){.gallery-grid{grid-template-columns:repeat(2,1fr)!important;grid-auto-rows:150px!important;gap:10px!important}.gallery-grid figure,.gallery-grid figure:nth-child(n){grid-column:span 1!important;grid-row:span 1!important}.gallery-grid figure:nth-child(1),.gallery-grid figure:nth-child(4),.gallery-grid figure:nth-child(21){grid-column:span 2!important;grid-row:span 2!important}}
+        .lightbox-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.92);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;cursor:pointer}
+        .lightbox-content{position:relative;max-width:90vw;max-height:90vh;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:default}
+        .lightbox-img{max-width:100%;max-height:80vh;object-fit:contain;border-radius:4px;box-shadow:0 10px 30px rgba(0,0,0,0.5)}
+        .lightbox-caption{color:#fff;margin-top:12px;font-size:14px;letter-spacing:1px;text-transform:uppercase;text-align:center}
+        .lightbox-close{position:absolute;top:-40px;right:0;background:none;border:none;color:#fff;font-size:32px;cursor:pointer;line-height:1;padding:5px}
       `}</style>
       <header className={`site-header ${isLightSection ? "site-header-light" : ""}`}>
         <button className="brand" onClick={() => scrollTo("home")} aria-label="Voltar ao início"><span className="brand-mark">GB</span><span><strong>GALPÃO</strong><small>BIRIVA</small></span></button>
@@ -78,12 +95,22 @@ function Index() {
       <section id="home" className="hero" style={{backgroundImage:`url(${images.hero})`,backgroundSize:"contain",backgroundPosition:"center",backgroundRepeat:"no-repeat",backgroundColor:"#17130f",minHeight:"78vh"}}><div className="hero-overlay"/><div className="hero-content"><p className="eyebrow hero-location">Horizontina · Rio Grande do Sul</p><div className="hero-logo"><span className="logo-seal">GB</span><h1>GALPÃO <em>BIRIVA</em></h1><div className="ornament"><span/>✦<span/></div><p>Celebrações autênticas em meio à natureza</p></div><button className="gold-button" onClick={()=>scrollTo("contato")}>Reservar meu evento <span>↗</span></button></div><div className="hero-scroll">role para descobrir <span>↓</span></div></section>
       <section id="sobre" className="intro section-light"><div className="section-kicker intro-kicker">Nossa essência</div><div className="intro-grid"><div className="intro-copy"><h2>A essência do<br/><i>Rio Grande do Sul</i></h2><p className="lead">Um lugar onde tradição, música e hospitalidade se encontram.</p><p>Em Horizontina, o Galpão Biriva nasceu como uma homenagem à memória e ao legado da cultura gaúcha. O espaço reúne arquitetura rústica, encontros, sabores e momentos que carregam a alma do nosso pago.</p><p>Mais do que um local para celebrar, é um cenário para viver experiências autênticas, com o calor da madeira, a natureza ao redor e aquele jeito simples e especial de receber bem.</p><button className="text-link intro-link" onClick={()=>scrollTo("galeria")}>Conheça o espaço <span>→</span></button></div><div className="intro-visual"><img src={images.intro} alt="Galpão Biriva cercado pela natureza"/><div className="image-caption"><span>01</span><strong>Um refúgio em meio à natureza</strong></div></div></div></section>
       <section id="servicos" className="services section-dark"><div className="section-heading center"><div className="section-kicker">O que fazemos</div><h2>Um galpão para <i>viver</i></h2><p>Da primeira conversa ao último acorde, criamos o cenário para a sua celebração.</p></div><div className="service-grid"><article className="service-card"><img src={images.interior} alt="Espaço do Galpão Biriva"/><div className="service-body"><span>01 · Eventos</span><h3>Aluguel de Galpão</h3><p>Um ambiente versátil para casamentos, aniversários, encontros familiares e eventos corporativos.</p><a href={wa} target="_blank" rel="noreferrer">Saiba mais ↗</a></div></article><article className="service-card"><img src={images.fire} alt="Experiência gastronômica"/><div className="service-body"><span>02 · Recepção</span><h3>Buffet & Acolhimento</h3><p>Estrutura preparada para receber seus convidados com conforto e um buffet tradicional que combina com a experiência.</p><button onClick={()=>scrollTo("contato")}>Solicitar informações ↗</button></div></article><article className="service-card"><img src={images.stage} alt="Eventos e apresentações"/><div className="service-body"><span>03 · Cultura</span><h3>Cultura & Shows</h3><p>Um palco para música ao vivo, apresentações culturais e noites que ficam na memória.</p><button onClick={()=>scrollTo("contato")}>Solicitar informações ↗</button></div></article></div></section>
-      <section id="galeria" className="gallery section-light"><div className="section-heading"><div className="section-kicker">Galeria de experiências</div><h2>Feito para <i>marcar</i></h2></div><div className="gallery-grid">{galleryItems.map(([src,caption],i)=><figure key={src} className={i===0?"gallery-tall":i===3||i===10?"gallery-wide":""}><img src={src} alt={`${caption} — Galpão Biriva`} loading={i>5?"lazy":undefined}/><figcaption>{caption}</figcaption></figure>)}</div></section>
+      <section id="galeria" className="gallery section-light"><div className="section-heading"><div className="section-kicker">Galeria de experiências</div><h2>Feito para <i>marcar</i></h2></div><div className="gallery-grid">{galleryItems.map(([src,caption],i)=><figure key={src} className={i===0?"gallery-tall":i===3||i===10?"gallery-wide":""} onClick={() => setSelectedImage([src, caption])}><img src={src} alt={`${caption} — Galpão Biriva`} loading={i>5?"lazy":undefined}/><figcaption>{caption}</figcaption></figure>)}</div></section>
       <section className="features section-brown"><div className="feature-image"><img src={images.pool} alt="Área externa do Galpão Biriva"/></div><div className="feature-copy"><div className="section-kicker">Detalhes que fazem diferença</div><h2>Um espaço<br/><i>completo</i></h2><p>Natureza, espaços de convivência e elementos que contam histórias. Tudo pensado para que seu evento tenha personalidade do começo ao fim.</p><div className="feature-list"><div><span>01</span><p><strong>Natureza ao redor</strong><br/>Um cenário que desacelera e aproxima.</p></div><div><span>02</span><p><strong>Espaços para celebrar</strong><br/>Ambientes que se adaptam ao seu momento.</p></div><div><span>03</span><p><strong>Identidade gaúcha</strong><br/>Detalhes autênticos em cada canto.</p></div></div></div></section>
       <section className="quotes section-light"><div className="section-kicker center">Quem já viveu</div><h2 className="center">Histórias que ficam</h2><div className="quote-grid">{["Um lugar lindo, acolhedor e cheio de personalidade. A estrutura e o clima fizeram nossa celebração ser ainda mais especial.","A experiência foi daquelas que a gente leva para a vida. Comida boa, ambiente incrível e aquele jeito gaúcho de receber.","O Galpão tem uma energia única. Cada detalhe conversa com a história e deixa qualquer encontro muito mais marcante."].map((text,i)=><blockquote key={text}><div className="stars">★★★★★</div><p>“{text}”</p><footer>{["Cliente de Evento Social","Anfitrião de Aniversário","Convidado de Festa Corporativa"][i]}</footer></blockquote>)}</div></section>
       <section id="localizacao" className="location section-light"><div className="section-heading"><div className="section-kicker">Visite o Galpão</div><h2>Como <i>chegar</i></h2><p>Encontre o Galpão Biriva no mapa e trace sua rota até o espaço.</p></div><div className="location-grid"><div className="map-frame"><iframe title="Mapa do Galpão Biriva" src={embedMap} loading="lazy" referrerPolicy="no-referrer-when-downgrade"/></div><div className="location-copy"><span className="location-pin">⌖</span><div className="section-kicker">Nossa localização</div><h3>Galpão Biriva</h3><p>Rua Mauro Alberto Hoffmann, 355<br/>Bairro Kennedy · Horizontina/RS</p><a className="gold-button" href={mapUrl} target="_blank" rel="noreferrer">Abrir no Google Maps ↗</a><a className="text-link" href={wa} target="_blank" rel="noreferrer">Precisa de ajuda? Fale conosco →</a></div></div></section>
       <section id="contato" className="contact section-dark"><div className="contact-card"><div className="contact-copy"><div className="section-kicker">Vamos conversar</div><h2>Planeje sua<br/><i>experiência</i></h2><p>Conte para nós o que você está imaginando. A gente ajuda a transformar a ideia em um encontro com a cara do Galpão Biriva.</p><div className="contact-actions"><a className="gold-button" href={wa} target="_blank" rel="noreferrer">Falar pelo WhatsApp ↗</a><button className="outline-button" onClick={()=>scrollTo("localizacao")}>Como chegar</button></div></div><div className="contact-meta"><div><span>Endereço</span><strong>Rua Mauro Alberto Hoffmann, 355<br/>Bairro Kennedy · Horizontina/RS</strong></div><div><span>Telefone</span><strong>(55) 99157-8125</strong></div></div></div></section>
       <footer className="footer"><div className="footer-brand"><span className="brand-mark">GB</span><div><strong>GALPÃO BIRIVA</strong><small>Celebrações autênticas em meio à natureza</small></div></div><div className="footer-links"><button onClick={()=>scrollTo("home")}>Home</button><button onClick={()=>scrollTo("sobre")}>Sobre</button><button onClick={()=>scrollTo("servicos")}>Serviços</button><button onClick={()=>scrollTo("galeria")}>Galeria</button><button onClick={()=>scrollTo("localizacao")}>Como chegar</button></div><div className="footer-social"><a href={wa} target="_blank" rel="noreferrer" aria-label="WhatsApp">◉</a><a href="#" aria-label="Instagram">◎</a><a href="#" aria-label="Facebook">f</a></div><div className="footer-copy">© {new Date().getFullYear()} Galpão Biriva · Horizontina/RS</div></footer>
+
+      {selectedImage && (
+        <div className="lightbox-overlay" onClick={() => setSelectedImage(null)}>
+          <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+            <button className="lightbox-close" onClick={() => setSelectedImage(null)}>✕</button>
+            <img src={selectedImage[0]} alt={selectedImage[1]} className="lightbox-img" />
+            <p className="lightbox-caption">{selectedImage[1]}</p>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
