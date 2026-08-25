@@ -38,7 +38,7 @@ const galleryItems = [
   ["/images/87472516_1486132294895884_2967420809208922112_n.jpg", "O Galpão em meio à natureza"],
 ];
 
-const wa = "https://wa.me/5555991578125?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20o%20Galp%C3%A3o%20Biriva.";
+const wa = "https://wa.me/5555991713400?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20o%20Galp%C3%A3o%20Biriva.";
 const mapQuery = "Galpão Biriva, Horizontina - RS";
 const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`;
 const embedMap = `https://www.google.com/maps?q=${encodeURIComponent(mapQuery)}&output=embed`;
@@ -272,7 +272,7 @@ function Index() {
           </div>
           <div className="contact-meta">
             <div><span>Endereço</span><strong>Rua Mauro Alberto Hoffmann, 355<br />Bairro Kennedy · Horizontina/RS</strong></div>
-            <div><span>Telefone</span><strong>(55) 99157-8125</strong></div>
+            <div><span>Telefone</span><strong>(55) 99171-3400</strong></div>
           </div>
         </div>
       </section>
