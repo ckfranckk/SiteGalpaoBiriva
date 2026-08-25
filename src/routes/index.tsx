@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 export const Route = createFileRoute("/")({ component: Index });
 
 const images = {
-  hero: "/images/483584955_1197092509083005_1796143863515048303_n.jpg",
+  hero: "/images/481814324_1189066569885599_6429074961118629882_n.jpg",
   interior: "/images/300472739_508352911290305_5922262342275235128_n.jpg",
   nature: "/images/185631209_1861923953983381_4208269538700398174_n.jpg",
   fire: "/images/505229815_3061616200680811_709904558938245634_n.jpg",
@@ -12,29 +12,29 @@ const images = {
   horse: "/images/41755224_1079903338852117_2633116119849762816_n.jpg",
 };
 
-const galleryImages = [
-  "/images/483584955_1197092509083005_1796143863515048303_n.jpg",
-  "/images/505229815_3061616200680811_709904558938245634_n.jpg",
-  "/images/505231436_3061615934014171_595236435169980913_n.jpg",
-  "/images/505316243_3061615907347507_5109892525483256687_n.jpg",
-  "/images/505361085_3061615857347512_9023914941476328939_n.jpg",
-  "/images/505373181_3061616187347479_541561586860835011_n.jpg",
-  "/images/505925832_3061616154014149_8121842937742465412_n.jpg",
-  "/images/506352578_3063742917134806_1744936794820546160_n.jpg",
-  "/images/506407126_3066040836905014_1853119773869822220_n.jpg",
-  "/images/480699540_2944288489080250_8027032989754745379_n.jpg",
-  "/images/480877961_2944288425746923_3308837504489904412_n.jpg",
-  "/images/480910692_2944288492413583_5625121446950711473_n.jpg",
-  "/images/481038645_2949879785187787_7564120191203350643_n.jpg",
-  "/images/481086792_2949879781854454_8822611948906802748_n.jpg",
-  "/images/481814324_1189066569885599_6429074961118629882_n.jpg",
-  "/images/480659633_2949879728521126_7570311681380352543_n.jpg",
-  "/images/472566825_2902028119972954_3223920115358530112_n.jpg",
-  "/images/39868567_1064675020374949_2616029498700726272_n.jpg",
-  "/images/39883629_1064674987041619_3949129592953896960_n.jpg",
-  "/images/39922600_1064674937041624_2487413125314248704_n.jpg",
-  "/images/77231399_1390975317744916_6243979044962959360_n.jpg",
-  "/images/87472516_1486132294895884_2967420809208922112_n.jpg",
+const galleryItems = [
+  ["/images/483584955_1197092509083005_1796143863515048303_n.jpg", "O espaço"],
+  ["/images/505229815_3061616200680811_709904558938245634_n.jpg", "Tradição gaúcha"],
+  ["/images/505231436_3061615934014171_595236435169980913_n.jpg", "Área externa"],
+  ["/images/505316243_3061615907347507_5109892525483256687_n.jpg", "Eventos e apresentações"],
+  ["/images/505361085_3061615857347512_9023914941476328939_n.jpg", "Momentos no Galpão"],
+  ["/images/505373181_3061616187347479_541561586860835011_n.jpg", "Celebrações"],
+  ["/images/505925832_3061616154014149_8121842937742465412_n.jpg", "Ambientes"],
+  ["/images/506352578_3063742917134806_1744936794820546160_n.jpg", "Natureza"],
+  ["/images/506407126_3066040836905014_1853119773869822220_n.jpg", "Detalhes"],
+  ["/images/480699540_2944288489080250_8027032989754745379_n.jpg", "Encontros"],
+  ["/images/480877961_2944288425746923_3308837504489904412_n.jpg", "Eventos"],
+  ["/images/480910692_2944288492413583_5625121446950711473_n.jpg", "Cultura"],
+  ["/images/481038645_2949879785187787_7564120191203350643_n.jpg", "Tradição"],
+  ["/images/481086792_2949879781854454_8822611948906802748_n.jpg", "Acolhimento"],
+  ["/images/481814324_1189066569885599_6429074961118629882_n.jpg", "Vivências"],
+  ["/images/480659633_2949879728521126_7570311681380352543_n.jpg", "Galpão Biriva"],
+  ["/images/472566825_2902028119972954_3223920115358530112_n.jpg", "Histórias"],
+  ["/images/39868567_1064675020374949_2616029498700726272_n.jpg", "Autenticidade"],
+  ["/images/39883629_1064674987041619_3949129592953896960_n.jpg", "Nossa essência"],
+  ["/images/39922600_1064674937041624_2487413125314248704_n.jpg", "Momentos especiais"],
+  ["/images/77231399_1390975317744916_6243979044962959360_n.jpg", "Rio Grande do Sul"],
+  ["/images/87472516_1486132294895884_2967420809208922112_n.jpg", "Alma gaúcha"],
 ];
 
 const wa = "https://wa.me/5555991578125?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20o%20Galp%C3%A3o%20Biriva.";
@@ -68,7 +68,7 @@ function Index() {
       </div></section>
 
       <section id="galeria" className="gallery section-light"><div className="section-heading"><div className="section-kicker">Galeria de experiências</div><h2>Feito para <i>marcar</i></h2></div><div className="gallery-grid">
-        {galleryImages.map((src, i) => <figure key={src} className={i === 0 ? "gallery-tall" : i === 3 || i === 10 ? "gallery-wide" : ""}><img src={src} alt={`Galpão Biriva — imagem ${i + 1}`} loading={i > 5 ? "lazy" : undefined} /><figcaption>{["O espaço", "Celebrações", "Momentos especiais", "Experiências", "Nossa estrutura", "Encontros", "Detalhes", "Natureza", "Ambientes", "Memórias", "Eventos", "Cultura", "Tradição", "Acolhimento", "Vivências", "Galpão Biriva", "Histórias", "Autenticidade", "Nossa essência", "Momentos", "Rio Grande do Sul", "Alma gaúcha"][i]}</figcaption></figure>)}
+        {galleryItems.map(([src, caption], i) => <figure key={src} className={i === 0 ? "gallery-tall" : i === 3 || i === 10 ? "gallery-wide" : ""}><img src={src} alt={`${caption} — Galpão Biriva`} loading={i > 5 ? "lazy" : undefined} /><figcaption>{caption}</figcaption></figure>)}
       </div></section>
 
       <section className="features section-brown"><div className="feature-image"><img src={images.pool} alt="Área externa do Galpão Biriva" /></div><div className="feature-copy"><div className="section-kicker">Detalhes que fazem diferença</div><h2>Um espaço<br /><i>completo</i></h2><p>Natureza, espaços de convivência e elementos que contam histórias. Tudo pensado para que seu evento tenha personalidade do começo ao fim.</p><div className="feature-list"><div><span>01</span><p><strong>Natureza ao redor</strong><br />Um cenário que desacelera e aproxima.</p></div><div><span>02</span><p><strong>Espaços para celebrar</strong><br />Ambientes que se adaptam ao seu momento.</p></div><div><span>03</span><p><strong>Identidade gaúcha</strong><br />Detalhes autênticos em cada canto.</p></div></div></div></section>
