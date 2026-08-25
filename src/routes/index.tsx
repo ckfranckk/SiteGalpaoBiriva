@@ -45,7 +45,11 @@ const embedMap = "https://www.google.com/maps?q=Rua%20Mauro%20Alberto%20Hoffmann
 function Index() {
   const [isLightSection, setIsLightSection] = useState(false);
   const [selectedImage, setSelectedImage] = useState<[string, string] | null>(null);
-  const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const scrollTo = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    setIsMenuOpen(false);
+  };
   const nav = [["home", "Home"], ["sobre", "Sobre nós"], ["servicos", "Serviços"], ["galeria", "Galeria"], ["localizacao", "Como chegar"]];
 
   useEffect(() => {
@@ -60,19 +64,13 @@ function Index() {
   }, []);
 
   useEffect(() => {
-    if (selectedImage) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
-    return () => {
-      document.body.style.overflow = "unset";
-    };
-  }, [selectedImage]);
+    document.body.style.overflow = selectedImage || isMenuOpen ? "hidden" : "unset";
+    return () => { document.body.style.overflow = "unset"; };
+  }, [selectedImage, isMenuOpen]);
 
   return (
     <main className="biriva-site">
-      <style>{`
+      <style>{` 
         .gallery-grid{display:grid!important;grid-template-columns:repeat(12,minmax(0,1fr))!important;grid-auto-rows:108px!important;grid-auto-flow:dense!important;gap:14px!important;align-items:stretch!important}
         .gallery-grid figure,.gallery-grid figure:nth-child(n){grid-column:span 3!important;grid-row:span 2!important;height:auto!important;min-height:0!important;cursor:pointer!important}
         .gallery-grid figure:nth-child(1),.gallery-grid figure:nth-child(4),.gallery-grid figure:nth-child(21){grid-column:span 6!important;grid-row:span 4!important}
@@ -90,8 +88,19 @@ function Index() {
       <header className={`site-header ${isLightSection ? "site-header-light" : ""}`}>
         <button className="brand" onClick={() => scrollTo("home")} aria-label="Voltar ao início"><span className="brand-mark">GB</span><span><strong>GALPÃO</strong><small>BIRIVA</small></span></button>
         <nav>{nav.map(([id, label]) => <button key={id} onClick={() => scrollTo(id)}>{label}</button>)}</nav>
-        <a className="header-cta" href={wa} target="_blank" rel="noreferrer">Reservar evento</a>
+        <div className="header-actions">
+          <a className="header-cta" href={wa} target="_blank" rel="noreferrer">Reservar evento</a>
+          <button className="menu-toggle" onClick={() => setIsMenuOpen(true)} aria-label="Abrir menu" aria-expanded={isMenuOpen}><span/><span/><span/></button>
+        </div>
       </header>
+      {isMenuOpen && (
+        <div className="mobile-menu-overlay" onClick={() => setIsMenuOpen(false)}>
+          <button className="mobile-menu-close" onClick={() => setIsMenuOpen(false)} aria-label="Fechar menu">✕</button>
+          <nav className="mobile-menu-nav" onClick={(e) => e.stopPropagation()}>
+            {nav.map(([id, label]) => <button key={id} onClick={() => scrollTo(id)}>{label}</button>)}
+          </nav>
+        </div>
+      )}
       <section id="home" className="hero" style={{backgroundImage:`url(${images.hero})`,backgroundSize:"contain",backgroundPosition:"center",backgroundRepeat:"no-repeat",backgroundColor:"#17130f",minHeight:"78vh"}}><div className="hero-overlay"/><div className="hero-content"><p className="eyebrow hero-location">Horizontina · Rio Grande do Sul</p><div className="hero-logo"><span className="logo-seal">GB</span><h1>GALPÃO <em>BIRIVA</em></h1><div className="ornament"><span/>✦<span/></div><p>Celebrações autênticas em meio à natureza</p></div><button className="gold-button" onClick={()=>scrollTo("contato")}>Reservar meu evento <span>↗</span></button></div><div className="hero-scroll">role para descobrir <span>↓</span></div></section>
       <section id="sobre" className="intro section-light"><div className="section-kicker intro-kicker">Nossa essência</div><div className="intro-grid"><div className="intro-copy"><h2>A essência do<br/><i>Rio Grande do Sul</i></h2><p className="lead">Um lugar onde tradição, música e hospitalidade se encontram.</p><p>Em Horizontina, o Galpão Biriva nasceu como uma homenagem à memória e ao legado da cultura gaúcha. O espaço reúne arquitetura rústica, encontros, sabores e momentos que carregam a alma do nosso pago.</p><p>Mais do que um local para celebrar, é um cenário para viver experiências autênticas, com o calor da madeira, a natureza ao redor e aquele jeito simples e especial de receber bem.</p><button className="text-link intro-link" onClick={()=>scrollTo("galeria")}>Conheça o espaço <span>→</span></button></div><div className="intro-visual"><img src={images.intro} alt="Galpão Biriva cercado pela natureza"/><div className="image-caption"><span>01</span><strong>Um refúgio em meio à natureza</strong></div></div></div></section>
       <section id="servicos" className="services section-dark"><div className="section-heading center"><div className="section-kicker">O que fazemos</div><h2>Um galpão para <i>viver</i></h2><p>Da primeira conversa ao último acorde, criamos o cenário para a sua celebração.</p></div><div className="service-grid"><article className="service-card"><img src={images.interior} alt="Espaço do Galpão Biriva"/><div className="service-body"><span>01 · Eventos</span><h3>Aluguel de Galpão</h3><p>Um ambiente versátil para casamentos, aniversários, encontros familiares e eventos corporativos.</p><a href={wa} target="_blank" rel="noreferrer">Saiba mais ↗</a></div></article><article className="service-card"><img src={images.fire} alt="Experiência gastronômica"/><div className="service-body"><span>02 · Recepção</span><h3>Buffet & Acolhimento</h3><p>Estrutura preparada para receber seus convidados com conforto e um buffet tradicional que combina com a experiência.</p><button onClick={()=>scrollTo("contato")}>Solicitar informações ↗</button></div></article><article className="service-card"><img src={images.stage} alt="Eventos e apresentações"/><div className="service-body"><span>03 · Cultura</span><h3>Cultura & Shows</h3><p>Um palco para música ao vivo, apresentações culturais e noites que ficam na memória.</p><button onClick={()=>scrollTo("contato")}>Solicitar informações ↗</button></div></article></div></section>
