@@ -165,17 +165,6 @@
   background: rgba(255, 255, 255, 0.02);
 }
 
-/* ── Quote card hover ─────────────────────────────────── */
-.quote-grid blockquote {
-  transition:
-    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.8s ease;
-}
-.quote-grid blockquote:hover {
-  transform: translateY(-16px);
-  box-shadow: 0 30px 60px rgba(54, 39, 28, 0.2);
-}
-
 /* ═══════════════════════════════════════════════════════
    ACCESSIBILITY: Respect user's motion preference
    ═══════════════════════════════════════════════════════ */
