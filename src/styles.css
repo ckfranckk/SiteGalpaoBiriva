@@ -5,7 +5,37 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Microinterações e sombras de profundidade (maioria movida para base/animations) */
-/* Removendo regras duplicadas e deixando apenas o que for específico de folha secundária,
-   mas como movi as regras principais de hover de cards para o styles-base.css 
-   para melhor organização com os tokens, este arquivo serve apenas como agregador. */
+/* Animação gradual dos links do menu */
+.site-header nav button {
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.site-header nav button::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #d8b77b;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.site-header nav button:hover::after {
+  transform: scaleX(1);
+}
+
+/* Transição suave e brilho no botão Reservar Evento */
+.header-cta {
+  transition: background-color 0.4s ease, color 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+
+.header-cta:hover {
+  background: #d8b77b;
+  color: #17110d;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(216, 183, 123, 0.4);
+}
