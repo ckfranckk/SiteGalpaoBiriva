@@ -357,11 +357,11 @@ function Index() {
       {/* Animated Stats Section */}
       <section className="stats-bar">
         <div className="stat-item reveal delay-1">
-          <AnimatedCounter target={15} suffix="+" />
+          <AnimatedCounter target={10} suffix="+" />
           <span className="stat-label">Anos de Tradição</span>
         </div>
         <div className="stat-item reveal delay-2">
-          <AnimatedCounter target={500} suffix="+" />
+          <AnimatedCounter target={200} suffix="+" />
           <span className="stat-label">Eventos Realizados</span>
         </div>
         <div className="stat-item reveal delay-3">

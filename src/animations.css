@@ -8,8 +8,8 @@
   opacity: 0;
   transform: translateY(30px);
   transition:
-    opacity 1s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 1.5s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1.5s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: opacity, transform;
 }
 .reveal.active {
@@ -56,7 +56,7 @@
   text-align: center;
   margin-top: 8px;
   color: #d8b77b;
-  animation: bounceArrow 2s ease-in-out infinite;
+  animation: bounceArrow 3s ease-in-out infinite;
 }
 
 /* ── Parallax layer (applied via JS transform) ────────── */
@@ -77,8 +77,8 @@
   transform: translateY(8px);
   opacity: 0;
   transition:
-    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.5s ease;
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.8s ease;
 }
 .gallery-grid figure:hover figcaption {
   transform: translateY(0);
@@ -105,7 +105,7 @@
   height: 1px;
   background: var(--gold, #b58a4a);
   transform: translateX(-101%);
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .text-link:hover::after {
   transform: translateX(0);
@@ -158,7 +158,7 @@
 
 /* ── Feature list item hover ──────────────────────────── */
 .feature-list > div {
-  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease, background 0.5s ease;
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.8s ease, background 0.8s ease;
 }
 .feature-list > div:hover {
   transform: translateX(4px);
@@ -168,12 +168,12 @@
 /* ── Quote card hover ─────────────────────────────────── */
 .quote-grid blockquote {
   transition:
-    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.6s ease;
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.8s ease;
 }
 .quote-grid blockquote:hover {
-  transform: translateY(-12px);
-  box-shadow: 0 24px 50px rgba(54, 39, 28, 0.2);
+  transform: translateY(-16px);
+  box-shadow: 0 30px 60px rgba(54, 39, 28, 0.2);
 }
 
 /* ═══════════════════════════════════════════════════════
