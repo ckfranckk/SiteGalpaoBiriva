@@ -82,21 +82,20 @@ section:has(#sobre) figure:hover img {
   transform: scale(1.04) !important;
 }
 
-/* 4. "Detalhes Que Fazem a Diferença" (Itens 1, 2 e 3) */
+/* 1. Suavização dos itens da seção "Detalhes que fazem a diferença" */
 .features-grid > div,
 .feature-item,
 section:has(.grid) .grid > div {
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.6s ease,
-              background-color 0.6s ease,
-              border-color 0.6s ease !important;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.8s ease,
+              border-color 0.8s ease !important;
 }
 
 .features-grid > div:hover,
 .feature-item:hover,
 section:has(.grid) .grid > div:hover {
-  transform: translateY(-4px) !important;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25) !important;
+  transform: translateX(6px) !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
 }
 
 /* 5. Avaliações "Quem Já Viveu" / "Histórias Que Ficam" (Efeito Pop-up Leve) */
@@ -115,36 +114,40 @@ section:has(blockquote) blockquote:hover {
   box-shadow: 0 16px 35px rgba(0, 0, 0, 0.3) !important;
 }
 
-/* 6. Localização ("Precisa de Ajuda?", "Fale Conosco" e "Abrir no Google Maps") */
-.map-frame button,
+/* 2. Suavização do botão "Abrir no Google Maps" */
 .map-frame a,
-.contact-card a,
-.contact-card button {
-  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+.map-frame button,
+a[href*="maps"] {
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.7s ease,
+              background-color 0.7s ease,
+              color 0.7s ease !important;
 }
 
-.map-frame button:hover,
 .map-frame a:hover,
+.map-frame button:hover,
+a[href*="maps"]:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 8px 24px rgba(216, 183, 123, 0.3) !important;
+}
+
+/* 3. Suavização do botão "Precisa de ajuda? Fale conosco" */
+.contact-card a,
+.contact-card button,
+a[href*="wa.me"],
+a[href*="whatsapp"] {
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.7s ease,
+              background-color 0.7s ease,
+              color 0.7s ease !important;
+}
+
 .contact-card a:hover,
-.contact-card button:hover {
+.contact-card button:hover,
+a[href*="wa.me"]:hover,
+a[href*="whatsapp"]:hover {
   transform: translateY(-3px) !important;
-  box-shadow: 0 8px 22px rgba(216, 183, 123, 0.25) !important;
-}
-
-/* 7. Botões do Rodapé/Final ("Falar pelo WhatsApp" e "Como Chegar") */
-footer a,
-footer button,
-.footer-cta a,
-.footer-cta button {
-  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
-}
-
-footer a:hover,
-footer button:hover,
-.footer-cta a:hover,
-.footer-cta button:hover {
-  transform: translateY(-3px) !important;
-  opacity: 0.95;
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.25) !important;
 }
 
 /* 8. Suavização das Animações de Entrada (Reveal na Rolagem) */
