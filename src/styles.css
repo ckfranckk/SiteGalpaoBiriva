@@ -131,25 +131,6 @@ a[href*="maps"]:hover {
   box-shadow: 0 8px 24px rgba(216, 183, 123, 0.3) !important;
 }
 
-/* 3. Suavização do botão "Precisa de ajuda? Fale conosco" */
-.contact-card a,
-.contact-card button,
-a[href*="wa.me"],
-a[href*="whatsapp"] {
-  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.7s ease,
-              background-color 0.7s ease,
-              color 0.7s ease !important;
-}
-
-.contact-card a:hover,
-.contact-card button:hover,
-a[href*="wa.me"]:hover,
-a[href*="whatsapp"]:hover {
-  transform: translateX(6px) !important;
-  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.25) !important;
-}
-
 /* 8. Suavização das Animações de Entrada (Reveal na Rolagem) */
 .reveal {
   transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
