@@ -136,7 +136,32 @@ function Index() {
 
   const scrollTo = (id: string) => {
     setIsMenuOpen(false);
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    const element = document.getElementById(id);
+    if (!element) return;
+
+    const targetPosition = element.getBoundingClientRect().top + window.pageYOffset - 80;
+    const startPosition = window.pageYOffset;
+    const distance = targetPosition - startPosition;
+    const duration = 800;
+    let start: number | null = null;
+
+    const step = (timestamp: number) => {
+      if (!start) start = timestamp;
+      const progress = timestamp - start;
+      const percentage = Math.min(progress / duration, 1);
+      
+      const easing = percentage < 0.5 
+        ? 4 * percentage * percentage * percentage 
+        : 1 - Math.pow(-2 * percentage + 2, 3) / 2;
+
+      window.scrollTo(0, startPosition + distance * easing);
+
+      if (progress < duration) {
+        window.requestAnimationFrame(step);
+      }
+    };
+
+    window.requestAnimationFrame(step);
   };
 
   const nav = [
