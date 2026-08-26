@@ -47,3 +47,108 @@ html {
   transform: translateY(-3px) !important;
   box-shadow: 0 6px 20px rgba(216, 183, 123, 0.4) !important;
 }
+
+/* 2. Imagem "Nossa Essência" (Zoom Lento e Entrada Suave) */
+.intro-visual img,
+.intro-visual figure,
+section:has(#sobre) img {
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.8s ease,
+              opacity 0.8s ease !important;
+}
+
+.intro-visual:hover img,
+section:has(#sobre) figure:hover img {
+  transform: scale(1.03) translateY(-3px) !important;
+}
+
+/* 3. Cards "O Que Fazemos" / "Um Galpão Para Viver" */
+.service-card {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.6s ease,
+              border-color 0.6s ease !important;
+}
+
+.service-card:hover {
+  transform: translateY(-8px) !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3) !important;
+}
+
+.service-card img {
+  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.service-card:hover img {
+  transform: scale(1.04) !important;
+}
+
+/* 4. "Detalhes Que Fazem a Diferença" (Itens 1, 2 e 3) */
+.features-grid > div,
+.feature-item,
+section:has(.grid) .grid > div {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.6s ease,
+              background-color 0.6s ease,
+              border-color 0.6s ease !important;
+}
+
+.features-grid > div:hover,
+.feature-item:hover,
+section:has(.grid) .grid > div:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25) !important;
+}
+
+/* 5. Avaliações "Quem Já Viveu" / "Histórias Que Ficam" (Efeito Pop-up Leve) */
+.quote-grid blockquote,
+.testimonial-card,
+section:has(blockquote) blockquote {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.6s ease,
+              border-color 0.6s ease !important;
+}
+
+.quote-grid blockquote:hover,
+.testimonial-card:hover,
+section:has(blockquote) blockquote:hover {
+  transform: translateY(-6px) scale(1.015) !important;
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* 6. Localização ("Precisa de Ajuda?", "Fale Conosco" e "Abrir no Google Maps") */
+.map-frame button,
+.map-frame a,
+.contact-card a,
+.contact-card button {
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.map-frame button:hover,
+.map-frame a:hover,
+.contact-card a:hover,
+.contact-card button:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 8px 22px rgba(216, 183, 123, 0.25) !important;
+}
+
+/* 7. Botões do Rodapé/Final ("Falar pelo WhatsApp" e "Como Chegar") */
+footer a,
+footer button,
+.footer-cta a,
+.footer-cta button {
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+footer a:hover,
+footer button:hover,
+.footer-cta a:hover,
+.footer-cta button:hover {
+  transform: translateY(-3px) !important;
+  opacity: 0.95;
+}
+
+/* 8. Suavização das Animações de Entrada (Reveal na Rolagem) */
+.reveal {
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 1s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
