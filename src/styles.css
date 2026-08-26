@@ -28,9 +28,13 @@ html {
   transform: scaleX(1);
 }
 
+.site-header nav button:hover {
+  color: #d8b77b;
+}
+
 /* Transição suave e brilho no botão Reservar Evento */
 .header-cta {
-  transition: background-color 0.4s ease, color 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .header-cta:hover {
@@ -38,4 +42,6 @@ html {
   color: #17110d;
   transform: translateY(-2px);
   box-shadow: 0 4px 20px rgba(216, 183, 123, 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
