@@ -175,3 +175,29 @@ a[href*="whatsapp"]:hover {
   transform: translateX(6px) !important;
   box-shadow: 0 8px 24px rgba(37, 211, 102, 0.25) !important;
 }
+
+/* Correções de enquadramento do Hero em telas pequenas */
+@media (max-width: 639px) {
+  .hero-title {
+    font-size: 1.75rem !important;
+    line-height: 1.2 !important;
+  }
+
+  .hero-title span {
+    white-space: nowrap !important;
+  }
+
+  .hero-bg-image {
+    background-position: center 30% !important;
+  }
+}
+
+/* Compensação para header fixo nas seções de destino */
+#home,
+#sobre,
+#servicos,
+#galeria,
+#localizacao,
+#contato {
+  scroll-margin-top: 80px;
+}
